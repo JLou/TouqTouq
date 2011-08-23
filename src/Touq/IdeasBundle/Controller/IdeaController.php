@@ -1,0 +1,272 @@
+<?php
+
+namespace Touq\IdeasBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Touq\IdeasBundle\Form\CommentType;
+use Touq\IdeasBundle\Entity\Idea;
+use Touq\IdeasBundle\Form\IdeaType;
+use Touq\IdeasBundle\Entity\Rating;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Touq\IdeasBundle\Entity\Comment;
+
+
+/**
+ * Idea controller.
+ *
+ */
+class IdeaController extends Controller
+{
+    /**
+     * Lists all Idea entities.
+     *
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entities = $em->getRepository('TouqIdeasBundle:Idea')->findAll();
+        rsort($entities);
+
+        return $this->render('TouqIdeasBundle:Idea:index.html.twig', array(
+            'entities' => $entities
+        ));
+    }
+
+    /**
+     * Finds and displays a Idea entity.
+     *
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('TouqIdeasBundle:Idea')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Idea entity.');
+        }
+
+        $form = $this->createForm(new CommentType());
+
+	$deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('TouqIdeasBundle:Idea:show.html.twig', array(
+            'entity'      => $entity,
+            'comment_form' => $form->createView(),
+	    'delete_form'  => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to create a new Idea entity.
+     *
+     */
+    public function newAction()
+    {
+        $entity = new Idea();
+        $form   = $this->createForm(new IdeaType(), $entity);
+
+        return $this->render('TouqIdeasBundle:Idea:new.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ));
+    }
+
+    /**
+     * Creates a new Idea entity.
+     *
+     */
+    public function createAction()
+    {
+        $entity  = new Idea();
+        $request = $this->getRequest();
+        $form    = $this->createForm(new IdeaType(), $entity);
+        $form->bindRequest($request);
+        
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+        $entity->setAuthor($user);
+        
+        if ($form->isValid()) {
+            
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('idees_show', array('id' => $entity->getId())));
+            
+        }
+
+        return $this->render('TouqIdeasBundle:Idea:new.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing Idea entity.
+     *
+     */
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('TouqIdeasBundle:Idea')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Idea entity.');
+        }
+
+        $editForm = $this->createForm(new IdeaType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('TouqIdeasBundle:Idea:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Edits an existing Idea entity.
+     *
+     */
+    public function updateAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('TouqIdeasBundle:Idea')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Idea entity.');
+        }
+
+        $editForm   = $this->createForm(new IdeaType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        $request = $this->getRequest();
+
+        $editForm->bindRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('idees_edit', array('id' => $id)));
+        }
+
+        return $this->render('TouqIdeasBundle:Idea:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Deletes a Idea entity.
+     *
+     */
+    public function deleteAction($id)
+    {
+        $form = $this->createDeleteForm($id);
+        $request = $this->getRequest();
+
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $entity = $em->getRepository('TouqIdeasBundle:Idea')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Idea entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('idees'));
+    }
+    
+    /**
+     *
+     * @param type $vote
+     * @param integer $id 
+     * 
+     * @TODO: Move this in a voteController
+     */
+    public function rateAction($vote, $id) 
+    {
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+        
+        $q = $this->getDoctrine()->getRepository('TouqIdeasBundle:Rating')->createQueryBuilder('r')
+                ->where('r.idea = :id')
+                ->andWhere('r.author = :user_id')
+                ->setParameter('id', $id)
+                ->setParameter('user_id', $user->getId())
+                ->getQuery();
+        
+        $hits = $q->getResult();
+        $rating = new Rating(); 
+        $vote = (int) $vote;
+        
+        //Hasn't voted for this idea yet
+         if(count($hits) == 0)
+         {
+             
+             $rating->setAuthor($user);
+             $rating->setIdea($id);
+             $rating->setValue($vote);
+             $msg = ("vote created");
+         }
+         //Update previous vote
+         else
+         {
+             $rating = $hits[0];
+             $rating->setValue($vote);
+             $msg = ('vote updated');
+             
+         }
+
+         $em = $this->getDoctrine()->getEntityManager();
+         $em->persist($rating);
+         $em->flush();
+         //@TODO: Create view
+         return new Response($msg);
+    }
+
+    public function comment_process(Request $request)
+    {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getEntityManager();
+        // Idea found
+        if($em->find('TouqIdeasBundle:Idea', $id))
+        {
+            $comment = new Comment();
+            $form = $this->createForm(new CommentType(), $comment);
+            $form->bind($request);
+            if($form->isValid())
+            {
+                $em->persist($comment);
+                $em->flush();            
+            }
+        }
+        else
+        {
+            //Idea not found
+        }
+    }
+    
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+        ;
+    }
+    
+    
+}

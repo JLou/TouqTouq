@@ -1,0 +1,9 @@
+TouqInventoryBundle_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: TouqInventoryBundle:Default:index }
+ItemBundle:
+    resource: "@TouqInventoryBundle/Resources/config/routing/item.yml"
+    prefix:   /item
+Categories:
+    resource: "@TouqInventoryBundle/Resources/config/routing/itemcategory.yml"
+    prefix: /categories

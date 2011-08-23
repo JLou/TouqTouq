@@ -1,0 +1,72 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<h1>Idea</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>                <td>{{ entity.id }}</td>        </tr>
+        <tr>
+            <th>Author</th>                <td>{{ entity.author }}</td>        </tr>
+        <tr>
+            <th>Content</th>                <td>{{ entity.content }}</td>        </tr>
+        <tr>
+            <th>Rating</th>                <td>{{ entity.rating }}</td>        </tr>
+        <tr>
+            <th>Category</th>     <td>{{ entity.category }}</td>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        
+<a href="{{ path('idees') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('idees_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('idees_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% if entity.comments|length %}
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Author</th>
+        <th>Content</th>
+        
+    </tr>
+    </thead>
+{% for comment in entity.comments %}
+    <tr>
+        <td>{{ comment.id }}</td>
+        <td>{{ comment.author }}</td>
+        <td>{{ comment.content }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+No comments so far.
+{% endif %}
+
+<h3>Post your own comment</h3>
+
+<form action="" method="post">
+    {{ form_widget(comment_form) }}
+    <p>
+        <button type="submit">Post!</button>
+    </p>
+</form>
+
+
+{% endblock %}

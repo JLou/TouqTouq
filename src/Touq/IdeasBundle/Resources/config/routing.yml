@@ -1,0 +1,34 @@
+idees:
+    pattern:  /
+    defaults: { _controller: "TouqIdeasBundle:Idea:index" }
+
+idees_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "TouqIdeasBundle:Idea:show" }
+
+idees_new:
+    pattern:  /new
+    defaults: { _controller: "TouqIdeasBundle:Idea:new" }
+
+idees_create:
+    pattern:  /create
+    defaults: { _controller: "TouqIdeasBundle:Idea:create" }
+    requirements: { _method: post }
+
+idees_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "TouqIdeasBundle:Idea:edit" }
+
+idees_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "TouqIdeasBundle:Idea:update" }
+    requirements: { _method: post }
+
+idees_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "TouqIdeasBundle:Idea:delete" }
+    requirements: { _method: post }
+    
+rating_test:
+    pattern: /vote/{id}-{vote}
+    defaults: { _controller: "TouqIdeasBundle:Idea:rate" }

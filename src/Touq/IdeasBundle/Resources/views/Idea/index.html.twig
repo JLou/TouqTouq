@@ -1,0 +1,71 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+Box à Idées
+{%endblock %}
+
+{% block body %}
+<h1>Idea list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Author</th>
+            <th>Content</th>
+            <th>Rating</th>
+            <th>Actions</th>
+            <th>Votes</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('idees_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.author }}</td>
+            <td>{{ entity.content }}</td>
+            <td>{{ entity.rating }}%</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('idees_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('idees_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li>
+                        <a href="{{ path('rating_test', {'id': entity.id, 'vote': true }) }}" title="Like it">
+                            <img src="{{ asset('img/accept.png') }}" alt="Good Idea!" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('rating_test', {'id': entity.id, 'vote': 0 }) }}" title="Dislike it">
+                            <img src="{{ asset('img/delete.png') }}" alt="Beh, who would even want that!" />
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </td>
+            <td>
+                {% for r in entity.ratings %}
+                    {% if r.value %}
+                        Thumb up
+                     {% else %}
+                        Thumb down
+                     {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('idees_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock %}

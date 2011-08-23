@@ -1,0 +1,7 @@
+parameters:
+#    touq_ideas.example.class: Touq\IdeasBundle\Example
+
+services:
+#    touq_ideas.example:
+#        class: %touq_ideas.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

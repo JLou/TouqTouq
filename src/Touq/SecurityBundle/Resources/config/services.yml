@@ -1,0 +1,7 @@
+parameters:
+#    touq_security.example.class: Touq\SecurityBundle\Example
+
+services:
+#    touq_security.example:
+#        class: %touq_security.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

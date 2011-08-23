@@ -1,0 +1,30 @@
+categories:
+    pattern:  /
+    defaults: { _controller: "TouqInventoryBundle:ItemCategory:index" }
+
+categories_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "TouqInventoryBundle:ItemCategory:show" }
+
+categories_new:
+    pattern:  /new
+    defaults: { _controller: "TouqInventoryBundle:ItemCategory:new" }
+
+categories_create:
+    pattern:  /create
+    defaults: { _controller: "TouqInventoryBundle:ItemCategory:create" }
+    requirements: { _method: post }
+
+categories_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "TouqInventoryBundle:ItemCategory:edit" }
+
+categories_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "TouqInventoryBundle:ItemCategory:update" }
+    requirements: { _method: post }
+
+categories_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "TouqInventoryBundle:ItemCategory:delete" }
+    requirements: { _method: post }
