@@ -1,9 +1,9 @@
 <?php
 
-namespace Touq\GaleryBundle;
+namespace Touq\GalleryBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class TouqGaleryBundle extends Bundle
+class TouqGalleryBundle extends Bundle
 {
 }

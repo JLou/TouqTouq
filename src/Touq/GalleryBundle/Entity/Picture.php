@@ -1,11 +1,11 @@
 <?php
 
-namespace Touq\GaleryBundle\Entity;
+namespace Touq\GalleryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Touq\GaleryBundle\Entity\Picture
+ * Touq\GalleryBundle\Entity\Picture
  *
  * @ORM\Table(name="pictures")
  * @ORM\Entity
@@ -29,23 +29,16 @@ class Picture
     private $postDate;
 
     /**
-     * @var string $title
-     *
-     * @ORM\Column(name="title", type="string", length=255)
-     */
-    private $title;
-
-    /**
      * @var text $description
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable="true")
      */
     private $description;
 
     /**
      * @var integer $postedBy
      *
-     * @ORM\Column(name="postedBy", type="integer")
+     * @ORM\Column(name="postedBy", type="integer", nullable="true")
      */
     private $postedBy;
 
@@ -56,7 +49,19 @@ class Picture
      */
     private $album;
 
-
+    /**
+     * @var string $url
+     * 
+     * @ORM\Column(name="url", type="string", length="255")
+     */
+    private $url;
+    
+    /**
+     *
+     * @var Symfony\Component\HttpFoundation\File\UploadedFile $file
+     * 
+     */
+    protected $file;
     /**
      * Get id
      *
@@ -165,5 +170,69 @@ class Picture
     public function getAlbum()
     {
         return $this->album;
+    }
+    
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+    
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+    public function upload()
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->file) {
+            return;
+        }
+        
+        // set the path property to the filename where you will save the file
+        $this->setUrl(uniqid() . '.' . $this->file->guessExtension());
+        
+        // we use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+
+        // move takes the target directory and then the target filename to move to
+        $this->file->move($this->getUploadRootDir(), $this->getUrl());
+
+        
+        
+
+        // clean up the file property as you won't need it anymore
+        $this->file = null;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->url ? null : $this->getUploadRootDir().'/'.$this->url;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->url ? null : $this->getUploadDir().'/'.$this->url;
+    }
+    
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded documents should be saved
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+    
+    public function getUploadDir()
+    {
+        return 'uploads/gallery';
     }
 }

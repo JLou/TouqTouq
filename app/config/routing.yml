@@ -2,8 +2,8 @@ TouqSecurityBundle:
     resource: "@TouqSecurityBundle/Resources/config/routing.yml"
     prefix:   /
 
-TouqGaleryBundle:
-    resource: "@TouqGaleryBundle/Resources/config/routing.yml"
+TouqGalleryBundle:
+    resource: "@TouqGalleryBundle/Resources/config/routing.yml"
     prefix:   /
 
 TouqIdeasBundle:

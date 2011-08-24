@@ -1,6 +1,6 @@
 <?php
 
-namespace Touq\GaleryBundle\Controller;
+namespace Touq\GalleryBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -10,6 +10,6 @@ class DefaultController extends Controller
     
     public function indexAction($name)
     {
-        return $this->render('TouqGaleryBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('TouqGalleryBundle:Default:index.html.twig', array('name' => $name));
     }
 }

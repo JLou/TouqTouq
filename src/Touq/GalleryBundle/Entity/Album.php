@@ -1,11 +1,11 @@
 <?php
 
-namespace Touq\GaleryBundle\Entity;
+namespace Touq\GalleryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Touq\GaleryBundle\Entity\Album
+ * Touq\GalleryBundle\Entity\Album
  *
  * @ORM\Table(name="albums")
  * @ORM\Entity

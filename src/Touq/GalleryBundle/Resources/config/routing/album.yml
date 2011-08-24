@@ -1,0 +1,30 @@
+album:
+    pattern:  /
+    defaults: { _controller: "TouqGalleryBundle:Album:index" }
+
+album_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "TouqGalleryBundle:Album:show" }
+
+album_new:
+    pattern:  /new
+    defaults: { _controller: "TouqGalleryBundle:Album:new" }
+
+album_create:
+    pattern:  /create
+    defaults: { _controller: "TouqGalleryBundle:Album:create" }
+    requirements: { _method: post }
+
+album_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "TouqGalleryBundle:Album:edit" }
+
+album_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "TouqGalleryBundle:Album:update" }
+    requirements: { _method: post }
+
+album_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "TouqGalleryBundle:Album:delete" }
+    requirements: { _method: post }

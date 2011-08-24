@@ -1,7 +1,7 @@
 parameters:
-#    touq_galery.example.class: Touq\GaleryBundle\Example
+#    touq_Gallery.example.class: Touq\GalleryBundle\Example
 
 services:
-#    touq_galery.example:
-#        class: %touq_galery.example.class%
+#    touq_Gallery.example:
+#        class: %touq_Gallery.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]

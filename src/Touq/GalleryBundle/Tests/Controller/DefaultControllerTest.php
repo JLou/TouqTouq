@@ -1,6 +1,6 @@
 <?php
 
-namespace Touq\GaleryBundle\Tests\Controller;
+namespace Touq\GalleryBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),            
             new Touq\InventoryBundle\TouqInventoryBundle(),
             new Touq\IdeasBundle\TouqIdeasBundle(),
-            new Touq\GaleryBundle\TouqGaleryBundle(),
+            new Touq\GalleryBundle\TouqGalleryBundle(),
             new Touq\SecurityBundle\TouqSecurityBundle(),
         );
 
