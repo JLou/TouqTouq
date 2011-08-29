@@ -14,19 +14,19 @@
 
 <ul class="record_actions">
     <li>
-        <a class="btn" href="{{ path('album') }}">
+        <a href="{{ path('album') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a class="btn primary" href="{{ path('album_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('album_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>
     <li>
         <form action="{{ path('album_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button class="btn danger" type="submit">Delete</button>
+            <button type="submit">Delete</button>
         </form>
     </li>
 </ul>
@@ -36,17 +36,16 @@
     <thead>
     <tr>
         <th>Id</th>
-        <th>Date</th>
-        <th>Desc</th>
-        <th>Content</th>        
+        <th></th>
+        <th>Content</th>
+        
     </tr>
     </thead>
 {% for picture in entity.pictures %}
     <tr>
         <td>{{ picture.id }}</td>
         <td>{{ picture.postDate|date("m/d/Y") }}</td>
-        <td>{{ picture.description }}</td>
-        <td><img src="/{{picture.getUploadDir }}/{{ picture.url }}" width="250px" /></td>
+        <td><img src="/{{picture.getUploadDir }}/{{ picture.url }}" /></td>
     </tr>
 {% endfor %}
 </table>

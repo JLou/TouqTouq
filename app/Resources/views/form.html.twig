@@ -1,0 +1,59 @@
+
+{% block field_row %}
+{% spaceless %}
+    <div class="clearfix">
+        {{ form_label(form, label|default(null)) }}
+        <div class="input{% if errors|length > 0 %} error{% endif %}">            
+            {{ form_widget(form) }}
+            {% if not ("email" in form.vars.types) %}
+                {{ form_errors(form) }}
+            {% endif %}
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock field_row %}
+
+{% block email_widget %}
+{% spaceless %}
+    {% set type = "text"|default('email') %}    
+    <div class="input-prepend">
+                <span class="add-on">@</span>
+                {{ block('field_widget') }}
+                {{ form_errors(form) }}
+    </div>
+{% endspaceless %}
+{% endblock email_widget %}
+
+{% block field_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+            {% for error in errors %}
+                <span class="help-inline">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</span><br/>
+            {% endfor %}
+    {% endif %}    
+{% endspaceless %}
+{% endblock field_errors %}
+
+
+{% block field_rows %}
+{% spaceless %}
+    <fieldset>
+    <legend>{{ form_label(form, label|default(null)) }}</legend>
+    {{ block('field_form_errors') }}
+    {% for child in form %}
+        {{ form_row(child) }}
+    {% endfor %}
+    </fieldset>
+{% endspaceless %}
+{% endblock field_rows %}
+
+{% block field_form_errors %}
+    <div>
+        {% if form.vars.url is defined %}
+            <img src="{{ asset(form.vars.url)}}" width="250px"/>
+        {% endif %}
+        {% for error in errors %}
+            <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+        {% endfor %}
+    </div>
+{% endblock field_form_errors %}

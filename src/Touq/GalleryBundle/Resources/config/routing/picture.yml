@@ -1,0 +1,44 @@
+picture:
+    pattern:  /
+    defaults: { _controller: "TouqGalleryBundle:Picture:index" }
+
+picture_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "TouqGalleryBundle:Picture:show" }
+
+picture_new:
+    pattern:  /new/{id}
+    defaults: { _controller: "TouqGalleryBundle:Picture:new" }
+
+picture_create:
+    pattern:  /create
+    defaults: { _controller: "TouqGalleryBundle:Picture:create" }
+    requirements: { _method: post }
+
+picture_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "TouqGalleryBundle:Picture:edit" }
+
+picture_edit_session:
+    pattern:  /edit
+    defaults: { _controller: "TouqGalleryBundle:Picture:edit" }
+
+picture_test:
+    pattern: /test
+    defaults: { _controller: "TouqGalleryBundle:Picture:test" }
+
+
+picture_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "TouqGalleryBundle:Picture:update" }
+    requirements: { _method: post }
+
+picture_multiple_update:
+    pattern:  /update
+    defaults: { _controller: "TouqGalleryBundle:Picture:update" }
+    requirements: { _method: post }
+
+picture_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "TouqGalleryBundle:Picture:delete" }
+    requirements: { _method: post }

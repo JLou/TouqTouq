@@ -211,8 +211,45 @@ td { vertical-align: top; }
    Author: 
    ========================================================================== */
 
+header {
+    
+    height:180px;
+    box-shadow: 2px 0 10px 1px #555;
+    margin-bottom:15px;
+    
+    background: rgb(255,255,255); /* Old browsers */
+    background: url(../img/girl.png), -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6+ */
+    background: url(../img/girl.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+    background: url(../img/girl.png), -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: url(../img/girl.png), -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Opera11.10+ */
+    background: url(../img/girl.png), -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+    background: url(../img/girl.png), linear-gradient(top, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
 
+    background-position:70% center;
+    background-repeat:no-repeat;
+}
+header h1 {
+    -webkit-text-stroke: 3px #a1d3ef;
+    height:125px;
+    text-align:center;
+    margin-right:30%;
+    font-size:5em;
+    color:#4a96e3;
+    font-family: 'Delius Unicase', cursive;
+    padding-top: 55px;
+    text-shadow: 0px 0px 15px #d5d5d5;
+}
+header h1 small {
+    line-height:0;
+    font-family: Georgia, "DejaVu Serif", Norasi, serif;
+    font-size: 0.35em !important;
+    -webkit-text-stroke:0;
+}
 
+footer {
+    text-align:center;
+}
 
 
 

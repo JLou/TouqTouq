@@ -1,3 +1,6 @@
 TouqGalleryBundleRoutes:
     resource: "@TouqGalleryBundle/Resources/config/routing/album.yml"
     prefix:   /albums
+TouqGalleryBundlePicture:
+    resource: "@TouqGalleryBundle/Resources/config/routing/picture.yml"
+    prefix:   /pictures

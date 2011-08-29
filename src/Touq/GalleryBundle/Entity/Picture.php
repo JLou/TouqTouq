@@ -3,6 +3,7 @@
 namespace Touq\GalleryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Touq\GalleryBundle\Entity\Picture
@@ -59,7 +60,9 @@ class Picture
     /**
      *
      * @var Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * 
+     * @Assert\Image(
+     *     maxSize = "4M"     
+     * )
      */
     protected $file;
     /**
@@ -72,6 +75,10 @@ class Picture
         return $this->id;
     }
 
+    public function setId()
+    {
+        
+    }
     /**
      * Set postDate
      *

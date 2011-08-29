@@ -14,7 +14,7 @@
 
   <title>{% block title %}Welcome!{% endblock %} - Direct Touq Touq</title>
   <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="author" content="JLou">
 
   <!-- Mobile viewport optimized: j.mp/bplateviewport -->
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -23,7 +23,11 @@
 
   <!-- CSS: implied media=all -->
   <!-- CSS concatenated and minified via ant build script-->
+  <link href='http://fonts.googleapis.com/css?family=Delius+Unicase' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    
+  <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.1.0.min.css">
+  
   {% block stylesheets %}{% endblock %}
   <!-- end CSS-->
 
@@ -35,28 +39,61 @@
   <script src="{{ asset('js/libs/modernizr-2.0.6.min.js') }}"></script>
 </head>
 
-<body>
+<body style="padding-top: 40px;">
 
   <div id="container">
     <header>
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                <a href="{{ path('fos_user_security_logout') }}">
-                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                </a>
-            {% else %}
-                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-            {% endif %}
+        <div class="topbar-wrapper" style="z-index: 5;">
+            <div class="topbar">
+              <div class="fill">
+                <div class="container">
+                  <h3><a href="#">Touq Touq</a></h3>
+                  <ul>
+                        <li class="active"><a href="{{ path('homepage') }}">Home</a></li>
+                        <li><a href="{{ path('idees') }}">Idées</a></li>
+                        <li><a href="{{ path('item') }}">Inventaire</a></li>
+                        <li><a href="{{ path('picture') }}">Photos</a></li>
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li style="margin-left: 15px; border-left:1px solid #333;">
+                            <span style="display:inline-block;float:none;padding:10px 10px 11px;line-height:19px;text-decoration:none;">
+                                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                            </span>
+                            <a href="{{ path('fos_user_security_logout') }}" style="display:inline-block">
+                                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li>
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}                                
+                            
+                            {% else %}
+                                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                            {% endif %}
+                        </li>
+                  </ul>
+                  <div class="login-form" style="line-height: 40px; float: right; margin-left:15px">
+                    
+            </div>
+                </div>
+              </div><!-- /fill -->
+            </div><!-- /topbar -->
+          </div>
+            <h1>Mamie Touq<br/>
+            <small>Le site dédié à la super Mamie Touq</small></h1>
     </header>
-    <div id="main" role="main">
-        {% block body %}{% endblock %}
-    </div>
+	<div id="main" class="" role="main">	    
+	    <div class="content">
+                 {% block body %}{% endblock %}
+	    </div> <!-- end of .content -->
+	</div> <!-- end of #main -->
     <footer>
-
+        Copyright &copy; Touq Touq 1914-2011<br>
+        Tout profit réalisé grâce à ce site ou grâce au nom &laquo; Touq&trade; &raquo; devra être intégralement versé avec intérêts à
+        Mamie Touq.
     </footer>
   </div> <!--! end of #container -->
 
-        {% block javascripts %}{% endblock %}
+    {% block javascripts %}{% endblock %}
 
   <!-- JavaScript at the bottom for fast page loading -->
 

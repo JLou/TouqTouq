@@ -2,9 +2,7 @@ imports:
     - { resource: parameters.ini }
     - { resource: security.yml }
 
-framework:
-    #esi:             ~
-    #translator:      { fallback: en }
+framework:    
     secret:          %secret%
     charset:         UTF-8
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -16,8 +14,8 @@ framework:
         default_locale: %locale%
         auto_start:     true
     translator:
-        enabled:              true
-        fallback:             en
+        enabled:    true
+        fallback:     fr
 
 
 # Twig Configuration
